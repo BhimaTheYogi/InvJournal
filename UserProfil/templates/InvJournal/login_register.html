@@ -54,7 +54,7 @@
                         <p>Dont Have an Account? <a href="{% url 'register' %}">Register</a></p>
                     </form>
                     {% else %}
-                    <form>
+                    <form method='post'>
                         <h1>Register</h1>
                         {% csrf_token %}
                         {{form}}

@@ -26,6 +26,20 @@ def logoutUser(request):
 def registerUser(request):
     page = 'register'
     form = CustomUserCreationForm()
+    
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+            
+            user = authenticate(
+                request, username=user.username, password=request.POST['password'])
+            
+            if user is not None:
+                login(request, user)
+                return redirect('Journal')
+    
     context = {'form': form, 'page': page}
     return render(request, 'InvJournal/login_register.html', context)
 
